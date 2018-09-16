@@ -88,4 +88,52 @@ public class DateUtils {
         }
         return dateList;
     }
+
+    /**
+     * 日期转成数值
+     * 调用例子：
+     * System.out.println(DateUtils.dateStrToLong("2018-09-19 19:10:00",DateUtils.yyyy_MM_dd_hh_mm_ss));
+     * return: 1537286400000
+     */
+    public static Long dateStrToLong(String dateStr,String format){
+        SimpleDateFormat sdf=new SimpleDateFormat(format);
+        Date date=null;
+        try {
+            date=sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long dateLong=date.getTime();
+        return dateLong;
+    }
+
+    /**
+     * 日期转成数值
+     * 调用例子：
+     * System.out.println(DateUtils.longToDateStr(1537286400000L,DateUtils.yyyy_MM_dd_hh_mm_ss));
+     * return: 2018-09-19 12:00:00
+     */
+    public static String longToDateStr(Long dateLong,String format){
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date date=new Date(dateLong);
+        String dateStr=sdf.format(date);
+        return dateStr;
+    }
+
+    /**
+     * 比较两个日期大小,返回较小值
+     * 调用例子：
+     *System.out.println(DateUtils.compareDateTakeSmall("2018-09-19","2018-09-15"));
+     * return: 2018-09-15
+     */
+    public static String compareDateTakeSmall(String date1,String date2){
+        SimpleDateFormat sdf = new SimpleDateFormat(DateUtils.yyyy_MM_dd);
+        Long long1=dateStrToLong(date1,DateUtils.yyyy_MM_dd);
+        Long long2=dateStrToLong(date2,DateUtils.yyyy_MM_dd);
+        if(long1< long2){
+            return date1;
+        }
+        return date2;
+    }
+
 }
